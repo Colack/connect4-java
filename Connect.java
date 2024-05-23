@@ -2,34 +2,18 @@ import java.util.Scanner;
 
 public class Connect {
     public static void main(String[] args) {
-        // "I hate Java, but if it's for the homie, I'll do it."
-        // "At least it's not C#"
-        // "I hate C#"
-        // "And Java"
-        // "C is the best language"
-        // ":D"
-        // You know, I should probably make a game in C and submit it as a assignment.
-        // Use C for the win!!!!
-        // Haha, I'm kidding, I'm not that crazy.
-        // At the same time, I hate Java
-        // I love you C
-        
-        // Create a scanner to get user input
         Scanner scanner = new Scanner(System.in);
         boolean gameOver = false;
         String piece = "X";
 
-        // RIP Jack, I don't like arraylists, so Instead we are using a 2D array
         String[][] board = new String[6][7];
 
-        // Fill the board with empty spaces
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = " ";
             }
         }
 
-        // Loop to keep the game going
         while (!gameOver) {
             clearScreen();
             printBoard(board);
@@ -68,7 +52,6 @@ public class Connect {
         // Print the credits, and a blatantly obvious plug for my website and my github
         System.out.println("Thanks for playing!");
         System.out.println("Created by Jack");
-        System.out.println("Like my games? Check out my website: https://colack.me");
         System.out.println("If you want to see more of my work, check out my github: https://github.com/colack");
     }
 
@@ -77,12 +60,24 @@ public class Connect {
      * @param board
      */
     public static void printBoard(String[][] board) {
-        // Loop through the board and print it
+        /*
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 System.out.print(board[i][j]);
             }
             System.out.println();
+        }
+        */
+
+        // Remake the previous code, except with a border around the board.
+        // Also try to make the board centered on the terminal
+
+        for (int i = 0; i < 6; i++) {
+            System.out.print("|");
+            for (int j = 0; j < 7; j++) {
+                System.out.print(board[i][j]);
+            }
+            System.out.println("|");
         }
     }
 
@@ -93,11 +88,12 @@ public class Connect {
      * @return The user's input
      */
     public static int getUserInput(Scanner scanner, String piece) {
-        // Get the user's input
-        System.out.println(piece + " enter a number between 1 and 7");
+        System.out.println("\n\n" + piece + " enter a number between 1 and 7");
         int userInput = scanner.nextInt();
         while (userInput < 1 || userInput > 7) {
-            System.out.println(piece + " enter a number between 1 and 7");
+            if (userInput < 1 || userInput > 7) {
+                System.out.println("Invalid input. Please enter a number between 1 and 7.");
+            }
             userInput = scanner.nextInt();
         }
         return userInput;
@@ -110,7 +106,6 @@ public class Connect {
      * @param piece
      */
     public static void placePiece(String[][] board, int userInput, String piece) {
-        // Loop through the board and place the piece in the first empty space that the user selected
         for (int i = board.length - 1; i >= 0; i--) {
             if (board[i][userInput - 1].equals(" ")) {
                 board[i][userInput - 1] = piece;
@@ -125,7 +120,6 @@ public class Connect {
      * @return True if the game is over, false if it is not.
      */
     public static boolean isGameOver(String[][] board) {
-        // Check if there is a winner or a draw, by running the isWinner and isDraw methods
         if (isWinner(board)) {
             System.out.println("We have a winner!");
             return true;
